@@ -6,12 +6,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-       // with xml config context.xml
-       // ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+       // Variant with xml config context.xml
+       ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+       //Variant with java config
+       //ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
 
-       //with java config
-        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConfig.class);
-        MessageRenderer renderer = context.getBean("renderer", MessageRenderer.class);
+        // set default ID simpleMessageRenderer in variant with component!!!
+        MessageRenderer renderer = context.getBean("simpleMessageRenderer", MessageRenderer.class);
         renderer.render();
     }
 }

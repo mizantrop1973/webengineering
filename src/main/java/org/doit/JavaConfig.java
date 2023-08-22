@@ -9,17 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 
-
+@ComponentScan("org.doit") //add annotation with directory
 public class JavaConfig {
+    //clean everything !!!
 
-    @Bean
-    public MessageProvider provider(){
-        return new SimpleMessageProvider();
-    }
-
-    @Bean
-    public MessageRenderer renderer(@Autowired MessageProvider provider) {
-        return new SimpleMessageRenderer(provider);
-    }
 }
 

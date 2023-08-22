@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="provider" class="org.doit.SimpleMessageProvider"/>
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+<!--Variant 1-->
+<!--    <bean id="provider" class="org.doit.SimpleMessageProvider"/>-->
 
-    <bean id="renderer" class="org.doit.SimpleMessageRenderer">
-        <constructor-arg name="provider" ref="provider"/>
-    </bean>
+<!--    <bean id="renderer" class="org.doit.SimpleMessageRenderer">-->
+<!--        <constructor-arg name="provider" ref="provider"/>-->
+<!--    </bean>-->
+
+<!--Variant 2-->
+    <context:component-scan base-package="org.doit"/>
+
+    
 
 </beans>
