@@ -3,16 +3,16 @@ package com.java.webengineering;
 import com.java.webengineering.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Controller
 public class MainController {
+    static List<User> users = new ArrayList<>();
+
 
    /* @GetMapping("/")
     public String view(@RequestParam(value = "name",
@@ -34,14 +34,24 @@ public class MainController {
 
     @GetMapping("/users")
     public String getUsers (Model model) {
-        Collection<User> users = List.of(
-                new User("John", "Smith", "www@qqq.com"),
-                new User("Mike", "Johnson", "qqq@qqq.com")
-        );
-
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @GetMapping("/users/new")
+    public String getSignUp() {
+        return "sign_up";
+    }
+
+    @PostMapping("/users/new")
+    public String SignUp(/*@RequestParam("name") String name,
+                         @RequestParam("surname") String surname,
+                         @RequestParam("email") String email*/
+                         @ModelAttribute User user) {
+        users.add(/*new User(name, surname, email)*/user);
+        return "redirect:/users";
 
     }
+
 
 }
