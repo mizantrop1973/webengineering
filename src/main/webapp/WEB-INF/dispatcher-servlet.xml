@@ -19,7 +19,8 @@
             </props>
         </property>
     </bean>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> <!-- mistake was here - was previous Resolver-->
         <property name="suffix" value=".ftl"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
         <property name="cache" value="false"/>
