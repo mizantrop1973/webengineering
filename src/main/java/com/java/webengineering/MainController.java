@@ -19,7 +19,7 @@ public class MainController {
     @GetMapping("/{name}")
     public String view(@PathVariable("name") String name, Model model){
         model.addAttribute("msg", "Hello, " + name);
-    return "index";
+        return "index";
     }
 
     @GetMapping("/raw")
