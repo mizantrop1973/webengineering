@@ -1,12 +1,13 @@
 package com.java.webengineering;
 
 import com.java.webengineering.model.User;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -39,7 +40,8 @@ public class MainController {
     }
 
     @GetMapping("/users/new")
-    public String getSignUp() {
+    public String getSignUp(Model model) {
+        model.addAttribute("user", new User());
         return "sign_up";
     }
 
@@ -47,11 +49,13 @@ public class MainController {
     public String SignUp(/*@RequestParam("name") String name,
                          @RequestParam("surname") String surname,
                          @RequestParam("email") String email*/
-                         @ModelAttribute User user) {
+                         @ModelAttribute @Valid User user, BindingResult result) {
+        if(result.hasErrors()){
+            return "/sign_up";
+        }
         users.add(/*new User(name, surname, email)*/user);
         return "redirect:/users";
 
     }
-
 
 }
