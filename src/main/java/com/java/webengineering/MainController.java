@@ -1,17 +1,27 @@
 package com.java.webengineering;
 
+import com.java.webengineering.dao.UserDAO;
 import com.java.webengineering.model.User;
+import com.java.webengineering.util.UserValidator;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.sql.SQLException;
 
 @Controller
 public class MainController {
-    static List<User> users = new ArrayList<>();
+
+    @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
+    private UserValidator userValidator;
+
+   // static List<User> users = new ArrayList<>();
 
 
    /* @GetMapping("/")
@@ -33,22 +43,24 @@ public class MainController {
     }
 
     @GetMapping("/users")
-    public String getUsers (Model model) {
-        model.addAttribute("users", users);
+    public String getUsers (Model model) throws SQLException {
+        model.addAttribute("users", userDAO.getAll());
         return "users";
     }
 
     @GetMapping("/users/new")
-    public String getSignUp() {
+    public String getSignUp(Model model) {
+        model.addAttribute("user", new User());
         return "sign_up";
     }
 
     @PostMapping("/users/new")
-    public String SignUp(/*@RequestParam("name") String name,
-                         @RequestParam("surname") String surname,
-                         @RequestParam("email") String email*/
-                         @ModelAttribute User user) {
-        users.add(/*new User(name, surname, email)*/user);
+    public String SignUp(@ModelAttribute @Valid User user, BindingResult result) throws SQLException {
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            return "sign_up";
+        }
+        userDAO.add(user);
         return "redirect:/users";
 
     }

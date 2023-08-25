@@ -1,12 +1,19 @@
 <html>
 <head>
-    <title>SignUp</title>
+    <title>Sign Up</title>
 </head>
 <body>
     <form action="/users/new" method="post">
-        <input name="name" type="text" placeholder="name">
-        <input name="surname" type="text" placeholder="surname">
-        <input name="email" type="email" placeholder="email">
+        <div>
+            <input name="name" type="text" placeholder="name">
+        </div>
+        <div>
+            <input name="surname" type="text" placeholder="surname">
+        </div>
+        <div>
+            <input name="email" type="email" placeholder="email">
+        </div>
+
         <input type="submit">
 
     </form>
