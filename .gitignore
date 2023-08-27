@@ -31,3 +31,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/lib/j2ee.jar

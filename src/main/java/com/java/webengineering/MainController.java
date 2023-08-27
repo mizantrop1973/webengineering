@@ -5,15 +5,19 @@ import com.java.webengineering.model.User;
 import com.java.webengineering.util.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @Controller
 public class MainController {
 
     @Autowired
+    @Qualifier("hibernateUserDAO")
     private UserDAO userDAO;
 
     @Autowired
@@ -21,13 +25,12 @@ public class MainController {
 
    // static List<User> users = new ArrayList<>();
 
-
-   /* @GetMapping("/")
+   /*@GetMapping("/")
     public String view(@RequestParam(value = "name",
             required = false, defaultValue = "stranger") String name, Model model){
         model.addAttribute("msg", "Hello, " + name);*/
 
-     //OR   (name is necessary)
+    //      OR   (name is necessary)
     @GetMapping("/{name}")
     public String view(@PathVariable("name") String name, Model model){
         model.addAttribute("msg", "Hello, " + name);
@@ -41,7 +44,7 @@ public class MainController {
     }
 
     @GetMapping("/users")
-    public String getUsers (Model model) {
+    public String getUsers (Model model) throws SQLException {
         model.addAttribute("users", userDAO.getAll());
         return "users";
     }
@@ -49,19 +52,16 @@ public class MainController {
     @GetMapping("/users/new")
     public String getSignUp(Model model) {
         model.addAttribute("user", new User());
-        return "sign_up_beta";
+        return "sign_up";
     }
 
     @PostMapping("/users/new")
     public String SignUp(@ModelAttribute @Valid User user, BindingResult result) {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
-            return "sign_up_beta";
+            return "sign_up";
         }
         userDAO.add(user);
         return "redirect:/users";
-
     }
-
-
 }
