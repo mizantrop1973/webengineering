@@ -1,11 +1,10 @@
-package com.java.webengineering;
+package com.java.webengineering.controller;
 
-import com.java.webengineering.dao.UserDAO;
 import com.java.webengineering.model.User;
+import com.java.webengineering.service.UserService;
 import com.java.webengineering.util.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +16,7 @@ import java.sql.SQLException;
 public class MainController {
 
     @Autowired
-    @Qualifier("jpaUserDAO")
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Autowired
     private UserValidator userValidator;
@@ -45,7 +43,7 @@ public class MainController {
 
     @GetMapping("/users")
     public String getUsers (Model model) throws SQLException {
-        model.addAttribute("users", userDAO.getAll());
+        model.addAttribute("users", userService.getAll());
         return "users";
     }
 
@@ -61,7 +59,7 @@ public class MainController {
         if (result.hasErrors()) {
             return "sign_up";
         }
-        userDAO.add(user);
+        userService.add(user);
         return "redirect:/users";
     }
 }
