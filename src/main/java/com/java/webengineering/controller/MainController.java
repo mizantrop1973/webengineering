@@ -45,6 +45,7 @@ public class MainController {
     public String getUsers (Model model) throws SQLException {
         model.addAttribute("users", userService.getAll());
         return "users";
+
     }
 
     @GetMapping("/users/new")

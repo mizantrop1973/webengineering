@@ -14,7 +14,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.java.webengineering")
-@ImportResource({"WEB-INF/persistence-config.xml", "WEB-INF/spring-aop.xml"})
+@ImportResource({/*"WEB-INF/persistence-config.xml", */"WEB-INF/spring-aop.xml"})
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
